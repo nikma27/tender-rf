@@ -63,3 +63,27 @@ tender-rf/
 - [ ] Подключение PostgreSQL
 - [ ] Аутентификация
 - [ ] Интеграция с zakupki.gov.ru
+
+## Cursor Cloud specific instructions
+
+### Services
+
+| Service | Command | Port |
+|---------|---------|------|
+| Frontend (Next.js) | `cd frontend && npm run dev` | 3000 |
+| Backend (FastAPI) | `cd backend && python3 -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000` | 8000 |
+
+- **Backend**: use `python3 -m uvicorn` (not bare `uvicorn`) — the pip-installed script may not be on `PATH` in the Cloud VM.
+- **Backend `.env`**: copy from `backend/.env.example` if `backend/.env` doesn't exist (`cp backend/.env.example backend/.env`). The `OPENAI_API_KEY` secret is optional — without it, `/api/analyze` returns 503, but the dashboard, tender table, and navigation work fine.
+- PostgreSQL is **not wired in** yet (`main.py` doesn't import any DB code), so no database is needed.
+
+### Lint / Build / Test
+
+- Frontend lint: `npm run lint` (in `frontend/`)
+- Frontend build: `npm run build` (in `frontend/`)
+- Backend has no automated tests or lint configured yet.
+
+### Gotchas
+
+- The frontend tender table uses **local mock data** (`frontend/src/data/mock-tenders.ts`), not the backend API. The document dropzone on the main dashboard page calls `localhost:8000/api/analyze` client-side.
+- Some sidebar pages (AI Анализ, Мои тендеры, Настройки) show "Страница в разработке" — this is expected, not a bug.

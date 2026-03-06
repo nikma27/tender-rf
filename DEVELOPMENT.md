@@ -54,6 +54,19 @@ DEBUG=false
 
 **Frontend:** API вызывается на `http://localhost:8000` (настраивается в `document-dropzone.tsx`).
 
+## Подключение удалённого репозитория
+
+```bash
+# GitHub
+git remote add origin https://github.com/<username>/tender-rf.git
+git branch -M main
+git push -u origin main
+
+# Или GitLab
+git remote add origin https://gitlab.com/<username>/tender-rf.git
+git push -u origin main
+```
+
 ## Облачный агент (Cursor)
 
 Проект настроен для работы с Cursor Cloud Agent:

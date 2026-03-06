@@ -1,0 +1,13 @@
+---
+description: Паттерны Backend — FastAPI, SQLAlchemy
+globs: backend/**/*.py
+alwaysApply: false
+---
+
+# Backend Patterns
+
+- Эндпоинты в `app/main.py`, роутеры в `app/api/v1/routes/`
+- Pydantic-схемы в `app/schemas/`, модели в `app/models.py`
+- Сервисы (AI, парсинг) в `app/services/`
+- CORS: `allow_origins=["http://localhost:3000"]`
+- Файлы: `UploadFile`, валидация PDF/DOCX, `OPENAI_API_KEY` из env

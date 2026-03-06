@@ -1,0 +1,13 @@
+---
+description: Паттерны Frontend — Next.js, React, Tailwind
+globs: frontend/**/*.tsx
+alwaysApply: false
+---
+
+# Frontend Patterns
+
+- Используй `"use client"` только когда нужны хуки или обработчики
+- Компоненты в `@/components/`, утилиты в `@/lib/utils`
+- Стили: Tailwind, тёмная тема, `border-white/10`, `bg-white/5`, `backdrop-blur-md`
+- shadcn/ui: Button, Card, Table, Badge, Dialog, Input
+- Иконки: lucide-react

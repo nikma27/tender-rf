@@ -1,0 +1,26 @@
+---
+description: Контекст проекта Tender RF — стек, структура, соглашения
+alwaysApply: true
+---
+
+# Tender RF — Правила проекта
+
+## Стек
+
+- **Frontend**: Next.js (App Router), React, Tailwind CSS, shadcn/ui. Тёмная тема, glassmorphism, Manrope.
+- **Backend**: FastAPI, SQLAlchemy, LangChain, OpenAI. Python 3.11+.
+
+## Структура
+
+- `frontend/src/app/` — страницы и layout
+- `frontend/src/components/` — layout (sidebar, contact-widget), dashboard (tender-table, document-dropzone)
+- `backend/app/main.py` — эндпоинты
+- `backend/app/services/ai_analyzer.py` — LangChain + pypdf/python-docx
+- `backend/app/models.py` — User, Tender, DocumentAnalysis
+
+## Соглашения
+
+- API: `/api/tenders`, `/api/analyze`, `/api/health`
+- Тендеры: поля `id`, `title`, `fzType`, `price`, `region`, `deadline`
+- Анализ: `hidden_risks`, `unclear_terms`, `short_deadlines`, `technical_traps`, `margin_estimation`
+- Язык интерфейса и комментариев: русский

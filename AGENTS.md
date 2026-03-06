@@ -29,7 +29,7 @@ tender-rf/
 │       ├── models.py   # SQLAlchemy: User, Tender, DocumentAnalysis
 │       ├── schemas/    # Pydantic: AnalysisResponse
 │       ├── services/   # ai_analyzer (LangChain, PDF/DOCX)
-│       ├── db/         # database.py
+│       ├── db/         # database.py, seed.py, seed.py
 │       └── core/       # config
 └── .cursor/rules/      # Правила для агента
 ```
@@ -37,7 +37,7 @@ tender-rf/
 ## Ключевые эндпоинты
 
 - `GET /api/health` — health check
-- `GET /api/tenders` — список тендеров (mock)
+- `GET /api/tenders` — список тендеров (PostgreSQL, seed при первом запуске)
 - `POST /api/analyze` — загрузка PDF/DOCX, AI-анализ (LangChain + OpenAI)
 
 ## Дизайн-система (Frontend)
@@ -60,7 +60,7 @@ tender-rf/
 
 - [x] Dashboard, Sidebar, Tender Table, Document Dropzone
 - [x] AI-анализ документов (PDF/DOCX) через LangChain
-- [ ] Подключение PostgreSQL
+- [x] Подключение PostgreSQL
 - [ ] Аутентификация
 - [ ] Интеграция с zakupki.gov.ru
 
@@ -75,7 +75,7 @@ tender-rf/
 
 - **Backend**: use `python3 -m uvicorn` (not bare `uvicorn`) — the pip-installed script may not be on `PATH` in the Cloud VM.
 - **Backend `.env`**: copy from `backend/.env.example` if `backend/.env` doesn't exist (`cp backend/.env.example backend/.env`). The `OPENAI_API_KEY` secret is optional — without it, `/api/analyze` returns 503, but the dashboard, tender table, and navigation work fine.
-- PostgreSQL is **not wired in** yet (`main.py` doesn't import any DB code), so no database is needed.
+- **PostgreSQL**: backend использует БД. Запусти `docker compose up -d` в корне проекта, затем backend. При первом запуске создаются таблицы и seed-данные (8 тестовых тендеров).
 
 ### Lint / Build / Test
 
@@ -85,5 +85,5 @@ tender-rf/
 
 ### Gotchas
 
-- The frontend tender table uses **local mock data** (`frontend/src/data/mock-tenders.ts`), not the backend API. The document dropzone on the main dashboard page calls `localhost:8000/api/analyze` client-side.
+- Frontend tender table по умолчанию использует **локальные mock-данные** (`frontend/src/data/mock-tenders.ts`). Backend API `GET /api/tenders` отдаёт данные из PostgreSQL — можно переключить frontend на API. Document dropzone вызывает `localhost:8000/api/analyze`.
 - Some sidebar pages (AI Анализ, Мои тендеры, Настройки) show "Страница в разработке" — this is expected, not a bug.
